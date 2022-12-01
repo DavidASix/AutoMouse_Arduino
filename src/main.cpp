@@ -58,17 +58,21 @@ void wiggle() {
 void scroll() {
   // Mouse has special signal pin quadrature encoder. Not sure how to spoof.
   // Tried hijacking the IRLED and the I/O pin, but couldn't get a phase that worked.
-  /*
-    digitalWrite(12, HIGH);
-    digitalWrite(13, LOW);
-    delay(40);
-    digitalWrite(13, HIGH);
-    delay(60);
-    digitalWrite(12, LOW);
-    delay(100);
-  */
+  // Below procedure takes 5000ms seconds
+  for(int i = 0; i< 300; i++) {
+      digitalWrite(ioPin, HIGH);
+      digitalWrite(irLed, LOW);
+      delay(2);
+      digitalWrite(irLed, HIGH);
+      delay(3);
+      digitalWrite(ioPin, LOW);
+      delay(5);
+  }
 }
 
 void loop() {
+  digitalWrite(bLed, LOW);
   scroll();
+  digitalWrite(bLed, HIGH);
+  delay(1000);
 }
