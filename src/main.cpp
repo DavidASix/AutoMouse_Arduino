@@ -9,11 +9,10 @@ int bLed = 4;
 int rmb = 7;
 int lmb = 8;
 
-// Quadrature Encoder Front & Back
-int qEf = 13;
-int qEb = 12;
-int qEfState = HIGH;
-int qEbState = LOW;
+// Quadrature Encoder
+int irLed = 13;
+int ioPin = 12;
+int irState = HIGH;
 
 void click();
 void wiggle();
@@ -25,8 +24,8 @@ void setup() {
   pinMode(bLed, OUTPUT);
   pinMode(rmb, OUTPUT);
   pinMode(lmb, OUTPUT);
-  pinMode(qEf, OUTPUT);
-  pinMode(qEb, OUTPUT);
+  pinMode(irLed, OUTPUT);
+  pinMode(ioPin, OUTPUT);
   // Anodes set to high to have LEDs off.
   digitalWrite(rLed, HIGH);
   digitalWrite(gLed, HIGH);
@@ -35,14 +34,13 @@ void setup() {
   digitalWrite(rmb, LOW);
   digitalWrite(lmb, LOW);
   // Initial state of scroll
-  digitalWrite(qEf, qEfState);
-  digitalWrite(qEb, qEbState);
+  digitalWrite(irLed, irState);
 }
 
 void click(int button) {
   // Simulate a mouse click, can be provided lmb or rmb
   digitalWrite(button, HIGH);
-  delay(200);
+  delay(300);
   digitalWrite(button, LOW);
 }
 
@@ -50,19 +48,27 @@ void wiggle() {
   // Flashes LEDs to stimulate mouse sensor, simulating movement.
   int leds[]={rLed, gLed, bLed};
   for (int i : leds) {
-    digitalWrite(i, HIGH);
-    delay(100);
     digitalWrite(i, LOW);
+    delay(50);
+    digitalWrite(i, HIGH);
     delay(50);
   }
 }
 
 void scroll() {
-  digitalWrite(qEf, !qEfState);
-  digitalWrite(qEb, !qEbState);
-  delay(100);
+  // Mouse has special signal pin quadrature encoder. Not sure how to spoof.
+  // Tried hijacking the IRLED and the I/O pin, but couldn't get a phase that worked.
+  /*
+    digitalWrite(12, HIGH);
+    digitalWrite(13, LOW);
+    delay(40);
+    digitalWrite(13, HIGH);
+    delay(60);
+    digitalWrite(12, LOW);
+    delay(100);
+  */
 }
 
 void loop() {
-  
+  scroll();
 }
