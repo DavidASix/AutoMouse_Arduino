@@ -27,15 +27,42 @@ void setup() {
   pinMode(lmb, OUTPUT);
   pinMode(qEf, OUTPUT);
   pinMode(qEb, OUTPUT);
-  // Initial state of scroll
-  digitalWrite(qEf, qEfState);
-  digitalWrite(qEb, qEbState);
   // Anodes set to high to have LEDs off.
   digitalWrite(rLed, HIGH);
   digitalWrite(gLed, HIGH);
   digitalWrite(bLed, HIGH);
+  // Set mouse buttons to low
+  digitalWrite(rmb, LOW);
+  digitalWrite(lmb, LOW);
+  // Initial state of scroll
+  digitalWrite(qEf, qEfState);
+  digitalWrite(qEb, qEbState);
+}
+
+void click(int button) {
+  // Simulate a mouse click, can be provided lmb or rmb
+  digitalWrite(button, HIGH);
+  delay(200);
+  digitalWrite(button, LOW);
+}
+
+void wiggle() {
+  // Flashes LEDs to stimulate mouse sensor, simulating movement.
+  int leds[]={rLed, gLed, bLed};
+  for (int i : leds) {
+    digitalWrite(i, HIGH);
+    delay(100);
+    digitalWrite(i, LOW);
+    delay(50);
+  }
+}
+
+void scroll() {
+  digitalWrite(qEf, !qEfState);
+  digitalWrite(qEb, !qEbState);
+  delay(100);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
 }
