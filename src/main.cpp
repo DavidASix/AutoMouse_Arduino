@@ -90,5 +90,7 @@ void loop() {
     // 50% chance of wiggle
     wiggle();
   }
-  delay(10000);
+  digitalWrite(gLed, LOW);
+  delay(random(10000, 15000));
+  digitalWrite(gLed, HIGH);
 }
